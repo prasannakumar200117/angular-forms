@@ -1,0 +1,117 @@
+/* user-form.component.css */
+
+/* Form container */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header style */
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Form group */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Labels */
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+  }
+  
+  /* Inputs and select */
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #fff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  input[type="text"]:focus,
+  input[type="password"]:focus,
+  input[type="email"]:focus,
+  select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+  /* Checkboxes and radios */
+  .form-check-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 15px;
+    font-size: 16px;
+  }
+  
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin-right: 8px;
+    vertical-align: middle; /* Ensure alignment */
+  }
+  
+  /* Submit button */
+  button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Error message */
+  .invalid-feedback {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  /* Decorative background */
+  body {
+    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  }
+
+  .d-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
+}
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mb-10 {
+  margin-bottom: 10px !important;
+}
+  

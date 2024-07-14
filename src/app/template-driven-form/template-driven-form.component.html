@@ -1,1 +1,47 @@
-<p>template-driven-form works!</p>
+<form #userForm="ngForm" (submit)="onSubmit()">
+    <div>
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" #firstname="ngModel" name="firstName" [(ngModel)]="contact.firstName" required >
+      <span *ngIf="!firstname.valid && firstname.touched">invalid name</span>
+    </div>
+    <div>
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" name="lastName" [(ngModel)]="contact.lastName" #lname="ngModel" required>
+      <span *ngIf="lname.touched" class="error">Enter the lastname</span>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" [(ngModel)]="contact.email"  required email>
+    </div>
+    <div>
+      <label>Gender:</label>
+      <label><input type="radio" name="gender" value="male" [(ngModel)]="contact.gender"> Male</label>
+      <label><input type="radio" name="gender" value="female" [(ngModel)]="contact.gender"> Female</label>
+    </div>
+    <div>
+      <label><input type="checkbox" name="married" [(ngModel)]="contact.isMarried"> Married</label>
+    </div>
+    <div>
+      <label for="country">Country:</label>
+      <select id="country" name="country" [(ngModel)]="contact.country" >
+        <option value="">Select Country</option>
+        <option [ngValue]="country.id" *ngFor="let country of countryList">{{country.name}}</option>
+      </select>
+    </div>
+<!-- nested formgroup -->
+    <div ngModelGroup="address">
+        <label for="age">Age:</label>
+    <input type="text" id="age" name="age" ngModel  required>
+
+    <label for="city">city:</label>
+    <input type="text" id="city" name="city" [(ngModel)]="contact.address.city" required>
+
+    <label for="Pincode">Pincode:</label>
+    <input type="text" id="Pincode" name="Pincode" ngModel  required>
+
+    </div>
+<!-- nested formgroup  -->
+    <div class="center"> 
+        <button type="submit" [disabled]="!userForm.valid">Submit</button>
+    </div>
+  </form>
