@@ -1,46 +1,67 @@
 <h1>Reactive form </h1>
 
 <form (ngSubmit)="onSubmitForm()" [formGroup]="contactForm">
-    <div>
-      <label for="firstName">First Name:</label>
-      <input type="text" id="firstName" name="firstName" formControlName="firstName"   >
-      <span *ngIf=""></span>
-    </div>
-    <div>
-      <label for="lastName">Last Name:</label>
-      <input type="text" id="lastName" name="lastName" formControlName="lastName" >
-      <span *ngIf="contactForm.get('lastName')?.invalid && contactForm.get('lastName')?.touched" class="error">*Lastname is required</span>
+  <div>
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" formControlName="firstName">
+    <span *ngIf=""></span>
+  </div>
+  <div>
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" formControlName="lastName">
+    <span *ngIf="contactForm.get('lastName').errors?.['required'] && contactForm.get('lastName').touched"
+      class="error">*Lastname is required</span>
+    <span *ngIf="contactForm.get('lastName').errors?.['noSpaceAllowed'] && contactForm.get('lastName').touched"
+      class="error">*Nospace allowed</span>
 
-    </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" formControlName="email" >
-      <!-- <span *ngIf="contactForm.get('email').invalid" class="error">*Email is required</span> -->
-      <span *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched" class="error">*Email is required and must be a valid email address</span>
+  </div>
 
-    </div>
-    <div>
-      <label>Gender:</label>
-      <label><input type="radio" name="gender" value="male" formControlName="gender"> Male</label>
-      <label><input type="radio" name="gender" value="female" formControlName="gender"> Female</label>
-    </div>
-    <div>
-      <label><input type="checkbox" name="married" formControlName="isMarried"> Married</label>
-    </div>
-    <div>
-      <label for="country">Country:</label>
-      <select id="country" name="country" formControlName="country">
-        <option value="1">IND</option>
-        <option value="2">USA</option>
-        <option value="3">UK</option>
-        <option value="4">INDUS</option>
-        <option value="5">AUS</option>
-        
-      </select>
-    </div>
-<!-- nested formgroup -->
-    <div formGroupName="address">
-        <label for="state">state:</label>
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" formControlName="email">
+    <!-- <span *ngIf="contactForm.get('email').invalid" class="error">*Email is required</span> -->
+    <span *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched" class="error">*Email is
+      required and must be a valid email address</span>
+
+  </div>
+
+  <div>
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob" formControlName="dob">
+
+    <!-- <span *ngIf="contactForm.get('dob').errors?.required && contactForm.get('dob').touched" class="error">* Date of Birth is required</span> -->
+  </div>
+
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" formControlName="username">
+    <button type="button" (click)="generateUsername()"
+      [disabled]="!(contactForm.get('firstName').value && contactForm.get('lastName').value && contactForm.get('dob').value)">Generate
+      Username</button>
+  </div>
+
+  <div>
+    <label>Gender:</label>
+    <label><input type="radio" name="gender" value="male" formControlName="gender"> Male</label>
+    <label><input type="radio" name="gender" value="female" formControlName="gender"> Female</label>
+  </div>
+  <div>
+    <label><input type="checkbox" name="married" formControlName="isMarried"> Married</label>
+  </div>
+  <div>
+    <label for="country">Country:</label>
+    <select id="country" name="country" formControlName="country">
+      <option value="1">IND</option>
+      <option value="2">USA</option>
+      <option value="3">UK</option>
+      <option value="4">INDUS</option>
+      <option value="5">AUS</option>
+
+    </select>
+  </div>
+  <!-- nested formgroup -->
+  <div formGroupName="address">
+    <label for="state">state:</label>
     <input type="text" id="state" name="state" formControlName="state">
 
     <label for="city">city:</label>
@@ -48,85 +69,125 @@
 
     <label for="Pincode">Pincode:</label>
     <input type="text" id="age" name="Pincode" formControlName="pinCode">
-    <span *ngIf="contactForm.get('address.pinCode')?.invalid && contactForm.get('address.pinCode')?.touched ">*Pincode is required</span>
+    <span *ngIf="contactForm.get('address.pinCode')?.invalid && contactForm.get('address.pinCode')?.touched ">*Pincode
+      is required</span>
 
 
-    
 
 
+
+  </div>
+  <!-- nested formgroup  -->
+
+  <div formArrayName="skills">
+    <div *ngFor="let control of contactForm.get('skills')['controls']; let i = index"
+      class="addskill d-flex align-items-center mb-10">
+      <input type="text" placeholder="Add skills..." [formControlName]="i" class="mb-0 ">
+      <button type="button" (click)="deleteSkill(i)">Delete</button>
     </div>
-<!-- nested formgroup  -->
 
-<div formArrayName="skills">
-  <div *ngFor="let control of contactForm.get('skills')['controls']; let i = index" class="addskill d-flex align-items-center mb-10">
-    <input type="text"   placeholder="Add skills..." [formControlName]="i" class="mb-0 ">
-  <button type="button" (click)="deleteSkill(i)" >Delete</button>
   </div>
 
-</div>
 
 
+  <button type="button" (click)="Addskill()" class="mt-10">Add skill</button>
 
-<button type="button" (click)="Addskill()" class="mt-10">Add skill</button>
 
-
-<div formArrayName="skillsGrp">
-  <div *ngFor="let ski of contactForm.get('skillsGrp')['controls']; let i=index" [formGroupName]="i">
-    <div class="form-group">
-      <h3>Experience {{ i +1}}</h3>
-      <label for="experience">Company name:</label>
-      <input type="text" id="experience" name="experience" class="form-control" formControlName="experience">
-    </div>
-    
-    <div class="d-flex justify-content-between">
-  
-      <div class="form-group w-50">
-        <label for="role">IT Role:</label>
-        <select id="role" name="role" class="form-control"  formControlName="role">
-          <option value="">Select Role</option>
-          <option value="Developer">Developer</option>
-          <option value="Designer">Designer</option>
-          <option value="Engineer">Engineer</option>
-          <option value="Manager">Manager</option>
-          <option value="Analyst">Analyst</option>
-        </select>
-      </div>
-  
-      <div class="form-group ">
-        <label for="texperience">Total experience</label>
-        <input type="number" id="texperience" name="texperience" class="form-control" formControlName="texperience">
-      </div>
-  
-    </div>
-  
-    <div class="d-flex justify-content-between mb-10">
+  <div formArrayName="skillsGrp">
+    <div *ngFor="let ski of contactForm.get('skillsGrp')['controls']; let i=index" [formGroupName]="i">
       <div class="form-group">
-        <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" name="startDate" class="form-control"  formControlName="startDate">
+        <h3>Experience {{ i +1}}</h3>
+        <label for="experience">Company name:</label>
+        <input type="text" id="experience" name="experience" class="form-control" formControlName="experience">
       </div>
-      
-      <div class="form-group">
-        <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" name="endDate" class="form-control"  formControlName="endDate">
+
+      <div class="d-flex justify-content-between">
+
+        <div class="form-group w-50">
+          <label for="role">IT Role:</label>
+          <select id="role" name="role" class="form-control" formControlName="role">
+            <option value="">Select Role</option>
+            <option value="Developer">Developer</option>
+            <option value="Designer">Designer</option>
+            <option value="Engineer">Engineer</option>
+            <option value="Manager">Manager</option>
+            <option value="Analyst">Analyst</option>
+          </select>
+        </div>
+
+        <div class="form-group ">
+          <label for="texperience">Total experience</label>
+          <input type="number" id="texperience" name="texperience" class="form-control" formControlName="texperience">
+        </div>
+
       </div>
-      
-    </div>   
-    
-    <button type="button" class="btn btn-danger" (click)="delexp(i)">Delete</button>
-    <hr>
+
+      <div class="d-flex justify-content-between mb-10">
+        <div class="form-group">
+          <label for="startDate">Start Date:</label>
+          <input type="date" id="startDate" name="startDate" class="form-control" formControlName="startDate">
+        </div>
+
+        <div class="form-group">
+          <label for="endDate">End Date:</label>
+          <input type="date" id="endDate" name="endDate" class="form-control" formControlName="endDate">
+        </div>
+
+      </div>
+
+      <button type="button" class="btn btn-danger" (click)="delexp(i)">Delete</button>
+      <hr>
+    </div>
+
+
+
+    <button type="button" class="btn btn-primary" (click)="addexp()">Add Experience</button>
+
   </div>
 
-  
 
-<button type="button" class="btn btn-primary"  (click)="addexp()">Add Experience</button>
 
+  <div class="center">
+    <button type="submit">Submit</button>
+    <!-- [disabled]="contactForm.invalid" -->
+  </div>
+</form>
+
+
+
+
+  <h2>Submitted Form Data:</h2>
+
+  <div *ngIf="submittedFormData">
+    <p><strong>First Name:</strong> {{ submittedFormData.firstName }}</p>
+    <p><strong>Last Name:</strong> {{ submittedFormData.lastName }}</p>
+    <p><strong>Email:</strong> {{ submittedFormData.email }}</p>
+    <p><strong>Date of Birth:</strong> {{ submittedFormData.dob }}</p>
+    <p><strong>Gender:</strong> {{ submittedFormData.gender }}</p>
+    <p><strong>Marital Status:</strong> {{ submittedFormData.isMarried ? 'Married' : 'Single' }}</p>
+    <p><strong>Country:</strong> {{ submittedFormData.country }}</p>
+
+    <h3>Address:</h3>
+  <p><strong>City:</strong> {{ submittedFormData.address.city }}</p>
+  <p><strong>State:</strong> {{ submittedFormData.address.state }}</p>
+  <p><strong>Pin Code:</strong> {{ submittedFormData.address.pinCode }}</p>
+
+    <h3>Skills:</h3>
+  <ul>
+    <li *ngFor="let skill of submittedFormData.skills">{{ skill }}</li>
+  </ul>
+
+    <h3>Experiences:</h3>
+  <div *ngFor="let experience of submittedFormData.skillsGrp; let i = index">
+    <h4>Experience {{ i + 1 }}</h4>
+    <p><strong>Company Name:</strong> {{ experience.experience }}</p>
+    <p><strong>Role:</strong> {{ experience.role }}</p>
+    <p><strong>Start Date:</strong> {{ experience.startDate }}</p>
+    <p><strong>End Date:</strong> {{ experience.endDate }}</p>
+    <p><strong>Total Experience:</strong> {{ experience.texperience }}</p>
+  </div>
+
+    <h3>Username:</h3>
+  <p>{{ submittedFormData.username }}</p>
 </div>
 
-
-
-    <div class="center">
-        <button type="submit" >Submit</button>
-        <!-- [disabled]="contactForm.invalid" -->
-    </div>
-  </form>
-  
