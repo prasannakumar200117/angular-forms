@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FormArray } from '@angular/forms';
+import { CustomValidators } from '../validators/noSpaceAllowed.validator';
 
 
 @Component({
@@ -17,19 +18,19 @@ contactForm! : FormGroup;
 
 ngOnInit(): void {
   this.contactForm = new FormGroup({
-    firstName: new FormControl(null,Validators.required),
-    lastName: new FormControl(null,Validators.required),  
+    firstName: new FormControl("Prasanna",[Validators.required, CustomValidators.noSpaceAllowed]),
+    lastName: new FormControl("kumar",Validators.required),  
     email: new FormControl("prasanna@gmail.com", [Validators.required, Validators.email]),
-    gender: new FormControl(null,Validators.required),
-    isMarried: new FormControl(null,Validators.required),
-    country: new FormControl(null,Validators.required),
+    gender: new FormControl("male",Validators.required),
+    isMarried: new FormControl("true",Validators.required),
+    country: new FormControl("1",Validators.required),
     address : new FormGroup({
-      city: new FormControl(null,Validators.required),
-      state:new FormControl(null,Validators.required),
-      pinCode:new FormControl(null,Validators.required)
+      city: new FormControl("new york",Validators.required),
+      state:new FormControl("america",Validators.required),
+      pinCode:new FormControl("40976",Validators.required)
     }),
     skills : new FormArray([
-      new FormControl("", Validators.required),
+      new FormControl("c", Validators.required),
     ]),
     skillsGrp : new FormArray([
       
@@ -51,15 +52,17 @@ onSubmitForm() {
 console.log(this.contactForm)
 console.log(this.contactForm.controls['email'].value)
 
+console.log(this.contactForm.controls['skillsGrp'].value[0].experience)
+
 }
 
 addexp() {
   const addskil = new FormGroup({
-    experience : new FormControl(),
-    role : new FormControl(),
-    startDate : new FormControl(),
-    endDate : new FormControl(),
-    texperience : new FormControl()
+    experience : new FormControl("cts"),
+    role : new FormControl("Developer"),
+    startDate : new FormControl("1-07-2024"),
+    endDate : new FormControl("31-07-2024"),
+    texperience : new FormControl("2")
 
   });
 

@@ -110,8 +110,7 @@
         <input type="date" id="endDate" name="endDate" class="form-control"  formControlName="endDate">
       </div>
       
-    </div>
-    
+    </div>   
     
     <button type="button" class="btn btn-danger" (click)="delexp(i)">Delete</button>
     <hr>
@@ -126,7 +125,8 @@
 
 
     <div class="center">
-        <button type="submit" [disabled]="contactForm.invalid">Submit</button>
+        <button type="submit" >Submit</button>
+        <!-- [disabled]="contactForm.invalid" -->
     </div>
   </form>
   
